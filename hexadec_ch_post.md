@@ -1,11 +1,7 @@
-NSTREES
-=======
-
-
 Note: ceci est une transcription en markdown du post original de la class sur hexadec.ch, <http://www.hexadec.ch/hexalab/article/nested-sets>
 
 
-## Nested Sets
+# Nested Sets
 
 Sous cette expression anglaise se cache une notion tout à fait commune à chacun d'entre nous, une structure hiérarchique. Une représentation hiérarchique d'éléments permet à l'Homme de les situer les uns par rapport aux autres.
 
@@ -57,6 +53,6 @@ Code source de cette classe : [http://www.hexadec.ch/sites/default/files/global/
 Code source d'un exemple d'utilisation : [http://www.hexadec.ch/sites/default/files/global/hexalab/nestedsets/nstreestest.phps](nstreestest.phps)
 
 
-### Références supplémentaires
+## Références supplémentaires
 
 - [http://www.sitepoint.com/article/hierarchical-data-database/2](Storing Hierarchical Data in a Database)

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="file:////opt/extras.ubuntu.com/uberwriter/share/uberwriter/media/uberwriter.css" type="text/css" />
+</head>
+<body>
+<p>Note: ceci est une transcription en markdown du post original de la class sur hexadec.ch, <a href="http://www.hexadec.ch/hexalab/article/nested-sets">http://www.hexadec.ch/hexalab/article/nested-sets</a></p>
+<h1 id="nested-sets">Nested Sets</h1>
+<p>Sous cette expression anglaise se cache une notion tout à fait commune à chacun d’entre nous, une structure hiérarchique. Une représentation hiérarchique d’éléments permet à l’Homme de les situer les uns par rapport aux autres.</p>
+<p>Il existe plusieurs modèles de structures de données pour représenter une hiérarchie d’éléments, celle faisant l’objet de cet article a plusieurs noms en fait:</p>
+<ul>
+<li>Nested sets (traduction française : Ensembles Nichés).</li>
+<li>Modified Preorder Tree Traversal (traduction française : Parcours préordonné modifié d’arbre).</li>
+</ul>
+<p>Un autre modèle courant est le modèle adjacent. C’est un des modèles les plus utilisés de par sa simplicité, chaque nœud est lié à son parent le plus proche. Malheureusement il faut utiliser la récursivité pour parcourir un arbre de ce type complètement. Cela peut devenir gênant lorsque la taille de l’arbre est importante.</p>
+<p>En revanche, la maintenance d’un arbre (ajout, modification, suppression de nœuds) basée sur le modèle adjacent est très rapide et simple à mettre en œuvre.</p>
+<p>Les Nested Sets quant à eux permettent un parcours de l’arbre complet optimisé (puisque préordonné), mais ils ont une maintenance plus lourde et moins aisée.</p>
+<p>Il s’agit donc de choisir la solution la plus appropriée au cas à traiter. Dans le cas des Nested Sets, voici quelques applications possibles :</p>
+<ul>
+<li>Catégories d’un forum / sites / magasin / …</li>
+<li>Menu de navigation</li>
+<li>Organigramme</li>
+</ul>
+<p>Le dénominateur commun de ces quelques applications est que la structure n’est modifiée que rarement, mais est parcourue intensivement !</p>
+<p>Il serait par contre illogique d’utiliser ce modèle dans le cas, par exemple, d’un forum au niveau de la hiérarchie des messages. La structure étant modifiée souvent il est préférable d’utiliser un modèle adjacent.</p>
+<p>Le fonctionnement des Nested Sets est le suivant, chaque nœud de l’arbre contient une référence au nœud “gauche” et au nœud “droite”. Cela sert à décrire le parcours à travers l’arbre et également à définir les niveaux hiérarchiques. Par exemple on peut dire que chaque nœud ayant un écart de plus de 1 entre la référence “gauche” et “droite” a au moins un enfant. On peu même trouver le nombre d’enfants en calculant : (“droite” - “gauche” - 1) / 2 .</p>
+<div class="figure">
+<img src="./nstrees.png" title="Schéma expliquant le parcours préordré" alt="Figure 1 — Parcours préordonné d’un arbre" /><p class="caption">Figure 1 — Parcours préordonné d’un arbre</p>
+</div>
+<p>Un autre avantage de cette structure est de pouvoir récupérer l’arbre en entier ou partiellement en une seule requête sur la base de données, sans devoir recourir à la récursivité. Ce qui en cas d’affichage courant de l’arbre permet d’utiliser le minimum de ressources possibles.</p>
+<p>La difficulté se situe dans la maintenance de l’arbre, car par exemple l’ajout d’un nœud dans la structure implique une mise à jour de tous les nœuds en aval de celui-ci. Il en va de même pour les autres opérations de maintenance.</p>
+<p>J’ai été amené à développer une classe pour l’accès et la maintenance de cette structure de Nested Sets. Il existe une bibliothèque de fonctions, créé par Rolf Brugger (<a href="edutech">http://www.edutech.ch/</a>), nommée <a href="nstrees%20library">http://www.edutech.ch/contribution/nstrees/</a> (sous licence <a href="GNU/GPL">http://www.gnu.org/copyleft</a>).</p>
+<p>En me basant sur ceci, j’ai développé un classe PHP permettant toutes ces opérations et quelques autres aussi. Voici quelques améliorations apportées :</p>
+<ul>
+<li>L’utilisation d’une classe permet une gestion de plusieurs arbres indépendants.</li>
+<li>Suppression d’un nœud : Conserver les enfants et les désimbriquer.</li>
+<li>Breadcrumbs Path, chemin vers un nœud sous forme de tableau et non-dépendant de la modélisation de la base de données (nom du champ): nstGetBreadcrumbsPath. (Ce nom vient de la fable du petit poucet laissant des morceaux de pain, beadcrumbs en anglais, pour retrouver son chemin)</li>
+<li>Récupération de tous les champs concernant un nœud : nstNodeAllAttributes.</li>
+<li>Toutes les méthodes et propriétés sont commentées.</li>
+<li>Aide à la compréhension sur le parcours de l’arbre inclus sous la forme de commentaires.</li>
+</ul>
+<p>Code source de cette classe : <a href="nstrees.class.phps">http://www.hexadec.ch/sites/default/files/global/hexalab/nestedsets/nstrees.class.phps</a> Code source d’un exemple d’utilisation : <a href="nstreestest.phps">http://www.hexadec.ch/sites/default/files/global/hexalab/nestedsets/nstreestest.phps</a></p>
+<h2 id="références-supplémentaires">Références supplémentaires</h2>
+<ul>
+<li><a href="Storing%20Hierarchical%20Data%20in%20a%20Database">http://www.sitepoint.com/article/hierarchical-data-database/2</a></li>
+</ul>
+</body>
+</html>
